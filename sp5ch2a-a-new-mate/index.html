@@ -13,23 +13,23 @@
     html, body{ width:100%; margin:0; padding:0; }
     *, *::before, *::after{ box-sizing:border-box; }
 
-    /* Bakgrund + lite bättre kontrast */
+    /* Bakgrund + grundtypografi */
     body{
       font-family: "OpenDyslexic", "Lexend", Arial, sans-serif;
-      font-size: 24px;
+      font-size: 24px;           /* större text */
       line-height: 1.8;
       padding: 26px;
-      background: #FFF6D6; /* mjuk gul */
+      background: #FFF6D6;       /* mjuk gul bakgrund */
       color: #111;
     }
 
-    /* Kort/pappersyta med ram */
+    /* Pappersyta/kort med ram */
     .page{
-      width: 100%;
+      width:100%;
       max-width: 980px;
       margin: 0 auto;
-      background: #FFFCF1; /* ännu ljusare "papper" */
-      border: 2px solid #E7D7A6;
+      background: #FFFCF1;       /* ljus “papperston” */
+      border: 2px solid #E7D7A6; /* ram */
       border-radius: 16px;
       padding: 22px 22px 18px 22px;
       box-shadow: 0 10px 26px rgba(0,0,0,.08);
@@ -62,7 +62,7 @@
     .w{
       position: relative;
       cursor: help;
-      border-bottom: 2px dotted #6a5b2b; /* tydligare på gul bakgrund */
+      border-bottom: 2px dotted #6a5b2b;
       padding: 0 2px;
       border-radius: 4px;
     }
@@ -119,7 +119,9 @@
       padding-top: 18px;
       border-top: 1px solid #E7D7A6;
     }
+
     figure{ margin: 0; }
+
     .imgUnderText{
       width: 100%;
       max-width: 980px;
@@ -129,19 +131,23 @@
       display: block;
       background: #fafafa;
     }
+
     figcaption{
       margin-top: 10px;
       font-size: 18px;
       color: #3b3b3b;
     }
+
     a{ color: inherit; }
 
-    /* Lite bättre läsbarhet på små skärmar */
+    /* Mobilanpassning */
     @media (max-width: 560px){
       body{ padding: 14px; font-size: 22px; }
       .page{ padding: 16px; border-radius: 14px; }
       h1{ font-size: 28px; }
       h2{ font-size: 24px; }
+      .small, figcaption{ font-size: 16px; }
+      .w:hover::after, .w:focus::after{ font-size: 16px; }
     }
   </style>
 </head>
@@ -621,4 +627,3 @@ Gemma. We’re so glad to have you in our class!”`;
   </script>
 </body>
 </html>
-
