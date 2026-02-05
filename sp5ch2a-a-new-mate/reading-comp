@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reading Comprehension: Compare with Example Answers</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.4; margin: 24px; max-width: 980px; }
+    h1 { font-size: 1.4rem; margin: 0 0 10px; }
+    .sub { margin: 0 0 18px; color: #444; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin: 12px 0; }
+    label { display: block; font-weight: 600; margin: 12px 0 6px; }
+    textarea, input[type="text"] {
+      width: 100%;
+      border: 1px solid #bbb;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    textarea { min-height: 70px; resize: vertical; }
+    details { margin-top: 12px; }
+    summary { cursor: pointer; font-weight: 650; }
+    .answerBox { background: #fafafa; border: 1px dashed #bbb; border-radius: 10px; padding: 10px; margin-top: 10px; }
+    .small { font-size: 0.95rem; color: #333; }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted #666;
+      cursor: help;
+      font-weight: 650;
+    }
+    .tooltip .tip {
+      visibility: hidden;
+      opacity: 0;
+      width: max-content;
+      max-width: 360px;
+      background: #111;
+      color: #fff;
+      text-align: left;
+      padding: 8px 10px;
+      border-radius: 10px;
+      position: absolute;
+      z-index: 10;
+      bottom: 125%;
+      left: 0;
+      transform: translateY(4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      font-size: 0.9rem;
+      line-height: 1.25;
+      font-weight: 500;
+    }
+    .tooltip:hover .tip {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Reading Comprehension: Compare with Example Answers</h1>
+  <p class="sub">
+    Write your answers in English. Then open <strong>Show example answer</strong> and compare <strong>your own answer</strong> with the example.
+  </p>
+
+  <!-- Q1 -->
+  <section class="card">
+    <div class="tooltip">
+      1) Where does Gemma live now?
+      <span class="tip">Svenska: Var bor Gemma nu?</span>
+    </div>
+
+    <label for="a1">Your answer</label>
+    <input id="a1" type="text" placeholder="Write your answer in English..." />
+
+    <details>
+      <summary>Show example answer</summary>
+      <div class="answerBox">
+        <div class="small"><strong>Example:</strong> Gemma lives in Massachusetts.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Q2 -->
+  <section class="card">
+    <div class="tooltip">
+      2) Where did she live in Australia?
+      <span class="tip">Svenska: Var bodde hon i Australien?</span>
+    </div>
+
+    <label for="a2">Your answer</label>
+    <input id="a2" type="text" placeholder="Write your answer in English..." />
+
+    <details>
+      <summary>Show example answer</summary>
+      <div class="answerBox">
+        <div class="small"><strong>Example:</strong> She lived in Queensland, Australia.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Q3 -->
+  <section class="card">
+    <div class="tooltip">
+      3) Why are the seasons “reversed” in Australia compared to the USA?
+      <span class="tip">Svenska: Varför är årstiderna ”omvända” i Australien jämfört med USA?</span>
+    </div>
+
+    <label for="a3">Your answer</label>
+    <textarea id="a3" placeholder="Write your answer in English..."></textarea>
+
+    <details>
+      <summary>Show example answer</summary>
+      <div class="answerBox">
+        <div class="small"><strong>Example:</strong> The seasons are reversed because Australia is in the Southern Hemisphere.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Q4 -->
+  <section class="card">
+    <div class="tooltip">
+      4) What temperatures are mentioned for January and July in Queensland?
+      <span class="tip">Svenska: Vilka temperaturer nämns för januari och juli i Queensland?</span>
+    </div>
+
+    <label for="a4">Your answer</label>
+    <textarea id="a4" placeholder="Write your answer in English..."></textarea>
+
+    <details>
+      <summary>Show example answer</summary>
+      <div class="answerBox">
+        <div class="small"><strong>Example:</strong> In January it is in the 80s and 90s (°F), and in July it can be in the 60s (°F).</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Q5 -->
+  <section class="card">
+    <div class="tooltip">
+      5) Why is Gemma especially curious about winter in Massachusetts?
+      <span class="tip">Svenska: Varför är Gemma extra nyfiken på vintern i Massachusetts?</span>
+    </div>
+
+    <label for="a5">Your answer</label>
+    <textarea id="a5" placeholder="Write your answer in English..."></textarea>
+
+    <details>
+      <summary>Show example answer</summary>
+      <div class="answerBox">
+        <div class="small"><strong>Example:</strong> She wants to experience snow because she has never built a snowman or gone sledding.</div>
+      </div>
+    </details>
+  </section>
+</body>
+</html>
