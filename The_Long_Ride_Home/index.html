@@ -117,27 +117,55 @@
       display: block;
       background: #f6f6f6;
     }
+
+    /* Felruta om JS kraschar */
+    .jsError{
+      display:none;
+      margin: 0 0 18px 0;
+      padding: 12px 14px;
+      border: 1px solid #d33;
+      border-radius: 12px;
+      background: #fff5f5;
+      color: #111;
+      font-size: 14px;
+    }
+    .jsError code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      background: #fff;
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
   </style>
 </head>
 
 <body>
   <div class="page">
     <h1>The Long Ride Home</h1>
-
     <div class="small">Listen to the text and then read it. Hover over words you don't understand.</div>
 
-    <!-- PLATSHÅLLARE FÖR LJUD: fyll i Drive-ID nedan när du har det -->
+    <!-- Ljud-platshållare -->
     <div class="audioPlaceholder" id="audioPh">
       <strong>Audio placeholder:</strong> Add a Google Drive file ID in <code>DRIVE_FILE_ID</code> to show the player here.
     </div>
 
-    <!-- Spelare (visas automatiskt när DRIVE_FILE_ID är ifyllt) -->
+    <!-- Spelare (visas när DRIVE_FILE_ID är ifyllt) -->
     <div class="audio" id="audioWrap" style="display:none;">
       <iframe id="audioFrame" allow="autoplay"></iframe>
     </div>
 
+    <div class="jsError" id="jsError">
+      <strong>Script error:</strong> Texten kunde inte renderas. Kontrollera att <code>RAW_LIST</code> och <code>TEXT</code> inte är avklippta.
+    </div>
+
     <!-- Texten renderas här -->
     <div id="out" aria-label="Text med hover-översättning"></div>
+
+    <!-- Fallback om JS är avstängt -->
+    <noscript>
+      <p><strong>Obs:</strong> Den här sidan kräver JavaScript för hover-översättning.</p>
+    </noscript>
   </div>
 
   <script>
@@ -148,7 +176,8 @@
     // A) Drive-filens ID (från länken .../d/ID/view). Lämna tomt "" om du inte vill ha ljud.
     const DRIVE_FILE_ID = "";
 
-    // B) Ordlista: en rad per ord/fras: engelska = svenska
+    // B) Ordlista (engelska = svenska)
+    // OBS: Om du någon gång får "tom sida", kontrollera att denna backtick ` finns kvar på slutet.
     const RAW_LIST = `a = en/ett
 above = ovanför
 across = över / tvärs över
@@ -175,7 +204,6 @@ because = därför att / eftersom
 become = bli
 becomes = blir
 bed = säng
-behind = bakom
 behind = bakom
 belong = tillhöra
 best = bäst
@@ -218,9 +246,6 @@ clouds = moln
 coat = rock / (häst)täcke
 cold = kall
 comes = kommer
-comfort = trösta
-comforts = tröstar
-comes = kommer
 could = kunde
 country = landsbygd / land
 countryside = landsbygd
@@ -228,11 +253,7 @@ cover = täcka
 covers = täcker
 cow = ko
 cows = kor
-crawl = krypa
 cry = gråta / skrik
-cries = gråter / skriker
-curious = nyfiken
-cut = skära / klippa
 dark = mörk
 day = dag
 days = dagar
@@ -243,12 +264,9 @@ difficult = svår / svårt
 dog = hund
 dogs = hundar
 down = ner
-draw = rita / dra
 dry = torr
-duck = and
 during = under (t.ex. under dagen)
 each = varje
-ear = öra
 early = tidigt
 eat = äta
 eats = äter
@@ -256,126 +274,60 @@ earth = jord
 easy = lätt
 even = även / till och med
 evening = kväll
-ever = någonsin
 every = varje
-everybody = alla
 everyone = alla
 everything = allt
 exact = exakt
 exhausted = utmattad
 explain = förklara
 explains = förklarar
-eye = öga
-face = ansikte
-fair = ljus / rättvis
-far = långt
-farm = gård
-farms = gårdar
 fast = snabb
 father = far / pappa
-feed = mata
-feeds = matar
 feels = känner sig / känns
-feeling = känsla
-few = få
 field = fält
 fields = fält
-figure = figur / tänka ut
 find = hitta
 finds = hittar
-fine = bra / fin
-finish = sluta / avsluta
 first = första
-fits = passar
-fix = laga
-flat = platt
-flow = flöde
 flowing = flytande / som rinner
-fly = flyga
-fog = dimma
-follow = följa
-food = mat
-for = för
-force = kraft
 forest = skog
-forward = framåt
-found = fann / hittade
-four = fyra
-free = fri
 freedom = frihet
 fresh = frisk / fräsch
-fright = skräck
 from = från
-front = front / framför
-full = full
-fun = roligt
-fur = päls
-future = framtid
 gentle = mild / försiktig
-gets = får
 get = få
+gets = får
 girl = flicka
 give = ge
 gives = ger
 go = gå / åka
 goes = går / åker
-going = på väg
 good = bra
-got = fick / blev
 grass = gräs
-great = bra / storartad
 green = grön
-ground = mark / jord
 group = grupp
-grow = växa
 grows = växer
-guard = vakt / skydda
-guards = vaktar
-guess = gissa
-guy = kille
-gives = ger
 had = hade
-hair = hår
-half = halv
 hand = hand
 hands = händer
-happen = hända
-happens = händer
-happy = glad
-hard = hårt / svårt
 has = har
 have = ha
 head = huvud
 hear = höra
 heard = hörde
-hearing = hörsel / lyssnande
-heart = hjärta
-heavy = tung
 help = hjälp / hjälpa
 helps = hjälper
 her = hennes / henne
 here = här
-high = hög
-hide = gömma
-highway = motorväg / landsväg
 hill = kulle
 hills = kullar
 him = honom
 his = hans
 hold = hålla
-holds = håller
-hole = hål
 home = hem
-honest = ärlig
-hook = krok
-hope = hoppas / hopp
 horse = häst
-horses = hästar
-hour = timme
 hours = timmar
 house = hus
-how = hur
-huge = enorm
 hurt = skada / göra ont
 hurts = gör ont
 i = jag
@@ -383,201 +335,309 @@ if = om
 in = i
 inside = inuti / inne
 instead = istället
-interest = intresse
 into = in i
 is = är
 it = det
 its = dess
 jacket = jacka
-job = jobb
-join = gå med / ansluta
-joy = glädje
 keep = behålla / hålla
 keeps = håller
-kept = höll / bevarade
-kill = döda
-kind = snäll / sort
-kitchen = kök
-knew = visste
 know = veta / känna till
 knows = vet / känner till
-last = sista / varar
-late = sen
-laugh = skratta
-lay = lägga
-lead = leda
-learn = lära sig
 leave = lämna
-leaves = lämnar
-left = vänster / lämnade
 leg = ben
 legs = ben (plural)
-less = mindre
-let = låta / tillåta
-letter = brev
-life = liv
 light = ljus
-lightly = lätt
 like = som / tycka om
-likes = tycker om
-line = linje / rad
 listen = lyssna
 listens = lyssnar
 little = liten
 live = leva / bo
 lives = bor / lever
 long = lång
-longer = längre
 look = titta
 looks = ser
-lose = förlora
-lost = förlorade
-lot = mycket
-loud = högljudd
-low = låg
-lucky = lycklig / lyckosam
-lunch = lunch
-made = gjorde / gjort
-make = göra
-makes = gör
 many = många
-marked = markerad
-market = marknad
-matter = fråga / betydelse
-may = kanske / får
-me = mig / jag
-mean = mena
-measure = mäta
-meet = träffa
-meets = träffar
-memory = minne
-mind = sinne / tänka
-mine = min
-miss = sakna / missa
 moment = ögonblick
 more = mer
 most = mest
-mother = mor / mamma
-mountain = berg
 move = röra / flytta
 moves = rör sig / flyttar
-much = mycket
-music = musik
 must = måste
-my = min / mitt
 near = nära
 nearby = i närheten
-neck = nacke
 need = behöva
 needs = behöver
 never = aldrig
-new = ny
-next = nästa
-nice = trevlig
-night = natt
-no = nej
-nobody = ingen
-none = ingen / inget
-north = norr
 not = inte
-note = anteckning / notera
-nothing = inget
-notice = märka
-now = nu
-number = nummer
 of = av
 off = av / bort
-offer = erbjuda
 often = ofta
-oh = åh
-old = gammal
 on = på
-once = en gång / en gång i tiden
 one = en / ett
 only = bara / endast
-open = öppen
-openly = öppet
 or = eller
-order = beställa / ordning
 other = annan
-our = vår
 out = ut
-outside = utanför
 over = över
-own = egen / äga
-page = sida
-paint = måla
-pair = par
-paper = papper
-part = del
-partly = delvis
-party = fest
-pass = passera
-past = förbi / förfluten
+parents = föräldrar
 path = stig / väg
 people = människor
-perfect = perfekt
-person = person
-pet = husdjur
 phone = telefon
-photos = foton
-pick = plocka / välja
-picture = bild
-piece = bit
-place = plats
-plain = enkel / slät
-plan = plan
-play = leka / spela
-plays = spelar
-please = snälla / varsågod
-point = punkt / poäng
-polite = artig
-poor = fattig / dålig
-possible = möjligt
-possibly = eventuellt
-post = posta
-power = kraft
-prepare = förbereda
-present = nuvarande / presentera
-press = trycka
-pretty = ganska / söt
-pride = stolthet
 proud = stolt
-put = lägga
 puts = lägger
 quiet = tyst
-quick = snabb
 quickly = snabbt
-quite = ganska
-race = tävling
-radio = radio
-rain = regn
-rainy = regnig
-raise = höja / uppfostra
-ran = sprang
-rather = hellre / ganska
-reach = nå
-read = läsa
-ready = redo
-real = verklig
-really = verkligen
-record = spela in / register
-red = röd
-remember = komma ihåg
-remembers = minns
-repeat = upprepa
-reply = svara
-report = rapport
-rest = vila / resten
-return = återvända
+river = flod / å
 ride = rida
 rides = rider
-river = flod / å
-road = väg
 roads = vägar
-rock = sten / rock
-roll = rulla
-rolling = rullande
-room = rum
-round = runt
-run =
+safe = säker
+says = säger
+see = se
+sees = ser
+seems = verkar
+she = hon
+small = liten
+smells = luktar
+soft = mjuk
+sound = ljud
+storm = Storm (egennamn) / storm
+strong = stark
+stronger = starkare
+suddenly = plötsligt
+sun = sol
+temperature = temperatur
+that = att / det / den
+the = den / det / de
+their = deras
+then = då / sedan
+there = där
+they = de
+think = tänka
+thinks = tänker
+this = detta / den här
+through = genom
+tired = trött
+to = till / att
+toward = mot
+trees = träd
+turns = svänger / vänder
+up = upp
+use = använda
+uses = använder
+wait = vänta
+waits = väntar
+walks = går
+warm = varm
+was = var
+watch = titta på / klocka
+watches = tittar på
+water = vatten
+weather = väder
+well = bra / väl
+when = när
+where = var / vart
+while = medan
+wide = bred / vid
+wind = vind
+with = med
+without = utan
+would = skulle
+wrong = fel
+year = år
+you = du / ni
+your = din / ditt / era`;
+
+    // C) Texten (tomrad = nytt stycke)
+    const TEXT = `The Girl and the Long Ride Home
+
+Anna is fifteen years old, and she lives in the countryside with her parents. Their house stands near wide fields, rolling green hills, and a quiet forest that looks dark in the evening. Anna loves animals, but she feels a special connection to her horse. His name is Storm. He is strong, calm, and surprisingly fast, and he always seems to understand her mood.
+
+Every morning Anna wakes up early, even when the air feels cold. She eats breakfast, puts on her boots, and walks to the stable. Storm waits for her and moves his head when he sees her, as if he says hello. Anna brushes his coat carefully and checks his saddle and reins. She talks to him in a soft voice, because it helps him relax. Then she rides Storm out into the open fields. She rides for many hours because it gives her freedom, and it clears her mind.
+
+Anna rides along small roads and narrow paths between farms. She sees birds above her, and cows that watch her from behind fences. The air smells of grass and earth, and it feels clean and fresh. Sometimes she stops near a river so Storm can drink water. She sits quietly for a moment and listens to the flowing water. She feels safe because she knows this area very well, and she knows most of the people who live nearby.
+
+In the afternoon, dark clouds move across the sky and cover the sun. The wind grows stronger, and the temperature drops a little. Anna looks up and decides to go home before the weather becomes dangerous. She turns Storm toward the forest path. This path is shorter, but it is also quiet and narrow, and it feels lonely when the light disappears.
+
+As they ride through the forest, Anna suddenly hears a strange sound. Storm stops at once and does not move. Anna listens carefully. She hears a soft cry, almost like a weak call for help. The sound comes from behind a group of trees. Anna feels nervous, but she stays calm and rides closer, slowly and carefully.
+
+Behind the trees she sees a small dog. The dog sits near a broken fence, and it looks scared and exhausted. One of its legs hurts, and it does not stand up. Anna gets off her horse and walks toward the dog in small steps. She speaks in a calm voice and keeps her hands low. The dog looks at her, but it does not run away.
+
+Anna thinks quickly. She cannot leave the dog alone in the forest, especially with the storm coming. She takes off her jacket and wraps it around the dog to keep it warm. Then she uses her phone and calls her parents. She explains where she is, what she sees, and why she needs help.
+
+Her parents drive to the forest in their car. While she waits, Anna stays close to the dog and watches its breathing. Storm stands quietly beside her, patient and steady. After some time, her parents arrive. They lift the dog carefully into the car and drive to the animal doctor.
+
+In the evening, Anna finally goes home. She feels tired, but also proud and relieved. She knows she does the right thing, even if it is difficult. Storm eats his food in the stable, and Anna gives him a gentle pat. It is a long day, but it is a good day.`;
+
+    /* =========================
+       INGEN ÄNDRING UNDER HÄR
+       ========================= */
+
+    function normalizeKey(raw){
+      return raw.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US");
+    }
+
+    function buildDict(raw){
+      const dict = {};
+      (raw || "").split("\n").forEach(line => {
+        const trimmed = (line || "").trim();
+        if(!trimmed) return;
+
+        const idx = trimmed.indexOf("=");
+        if(idx === -1) return;
+
+        const left = trimmed.slice(0, idx).trim();
+        const right = trimmed.slice(idx + 1).trim();
+        if(!left || !right) return;
+
+        dict[normalizeKey(left)] = right;
+      });
+      return dict;
+    }
+
+    function tokenizeEnglish(text){
+      const re = /[A-Za-z]+(?:-[A-Za-z]+)*|[0-9]+|\s+|[^A-Za-z0-9\s]+/g;
+      return text.match(re) || [];
+    }
+
+    function isWord(tok){
+      return /^[A-Za-z]+(?:-[A-Za-z]+)*$/.test(tok) || /^[0-9]+$/.test(tok);
+    }
+
+    function isWhitespace(tok){
+      return /^\s+$/.test(tok);
+    }
+
+    function renderInline(container, text, dict){
+      const tokens = tokenizeEnglish(text);
+
+      const keys = Object.keys(dict);
+      const maxWords = keys.length
+        ? keys.map(k => k.split(" ").length).reduce((a,b) => Math.max(a,b), 1)
+        : 1;
+
+      let i = 0;
+      while(i < tokens.length){
+        const tok = tokens[i];
+
+        if(!isWord(tok)){
+          container.appendChild(document.createTextNode(tok));
+          i += 1;
+          continue;
+        }
+
+        let matched = false;
+
+        for(let k = maxWords; k >= 2; k--){
+          let j = i;
+          let words = [];
+          let endIndex = i;
+
+          while(words.length < k){
+            if(j >= tokens.length) break;
+            if(!isWord(tokens[j])) break;
+
+            words.push(tokens[j]);
+            endIndex = j;
+
+            if(words.length === k) break;
+
+            j += 1;
+            if(j >= tokens.length || !isWhitespace(tokens[j])){
+              words = [];
+              break;
+            }
+            while(j < tokens.length && isWhitespace(tokens[j])) j += 1;
+          }
+
+          if(words.length === k){
+            const key = normalizeKey(words.join(" "));
+            const sv = dict[key];
+            if(sv){
+              const segment = tokens.slice(i, endIndex + 1).join("");
+              const span = document.createElement("span");
+              span.className = "w";
+              span.textContent = segment;
+              span.setAttribute("tabindex", "0");
+              span.setAttribute("data-sv", sv);
+              container.appendChild(span);
+
+              i = endIndex + 1;
+              matched = true;
+              break;
+            }
+          }
+        }
+
+        if(matched) continue;
+
+        const sv1 = dict[normalizeKey(tok)];
+        if(sv1){
+          const span1 = document.createElement("span");
+          span1.className = "w";
+          span1.textContent = tok;
+          span1.setAttribute("tabindex", "0");
+          span1.setAttribute("data-sv", sv1);
+          container.appendChild(span1);
+        } else {
+          container.appendChild(document.createTextNode(tok));
+        }
+
+        i += 1;
+      }
+    }
+
+    function setupAudio(){
+      const ph = document.getElementById("audioPh");
+      const wrap = document.getElementById("audioWrap");
+      const frame = document.getElementById("audioFrame");
+      if(!wrap || !frame) return;
+
+      const id = (DRIVE_FILE_ID || "").trim();
+      if(!id){
+        wrap.style.display = "none";
+        if(ph) ph.style.display = "block";
+        return;
+      }
+
+      if(ph) ph.style.display = "none";
+      frame.src = "https://drive.google.com/file/d/" + encodeURIComponent(id) + "/preview";
+      wrap.style.display = "block";
+    }
+
+    function render(){
+      setupAudio();
+
+      const dict = buildDict(RAW_LIST);
+      const out = document.getElementById("out");
+      out.innerHTML = "";
+
+      const clean = (TEXT || "").replace(/\r\n/g, "\n").trim();
+      const blocks = clean.split(/\n\s*\n+/);
+
+      blocks.forEach((block, idx) => {
+        const blockText = block.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+
+        if(idx === 0){
+          const h2 = document.createElement("h2");
+          renderInline(h2, blockText, dict);
+          out.appendChild(h2);
+        } else {
+          const p = document.createElement("p");
+          renderInline(p, blockText, dict);
+          out.appendChild(p);
+        }
+      });
+    }
+
+    try{
+      render();
+    } catch(e){
+      console.error(e);
+      const el = document.getElementById("jsError");
+      if(el) el.style.display = "block";
+    }
+  </script>
+</body>
+</html>
