@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Long Ride Home</title>
+  <title>The Girl and the Long Ride Home</title>
 
-  <!-- Dyslexivänligt typsnitt (Lexend). Fallback till OpenDyslexic om installerat lokalt. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
@@ -16,48 +15,25 @@
 
     body{
       font-family: "OpenDyslexic", "Lexend", Arial, sans-serif;
-      font-size: 20px;          /* större text */
-      line-height: 1.75;
+      font-size: 20px;
+      line-height: 1.7;
       padding: 20px;
-      max-width: none;
       background: #fff;
       color: #111;
     }
 
-    .page{ width:100%; max-width:100%; }
+    h1{ font-size: 26px; margin-bottom: 8px; }
+    .small{ font-size: 14px; color:#444; margin-bottom: 20px; }
+    h2{ font-size: 22px; margin-bottom: 16px; }
+    p{ margin-bottom: 16px; }
 
-    h1{
-      margin: 0 0 10px 0;
-      font-size: 28px;
-      line-height: 1.2;
-    }
-
-    .small{
-      font-size: 16px;
-      color: #444;
-      margin: 0 0 18px 0;
-    }
-
-    /* Avsnitt som i texten */
-    h2{
-      font-size: 22px;
-      margin: 0 0 16px 0;
-      font-weight: 600;
-      line-height: 1.3;
-    }
-
-    p{ margin: 0 0 16px 0; }
-    p:last-child{ margin-bottom: 0; }
-
-    /* Endast ord/fraser med översättning får understreck */
     .w{
       position: relative;
       cursor: help;
       border-bottom: 1px dotted #666;
-      padding: 0 1px;
     }
 
-    .w:hover::after, .w:focus::after{
+    .w:hover::after{
       content: attr(data-sv);
       position: absolute;
       left: 50%;
@@ -65,68 +41,36 @@
       bottom: 140%;
       background: #111;
       color: #fff;
-      padding: 8px 10px;
-      border-radius: 10px;
-      font-size: 15px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 14px;
       white-space: nowrap;
       z-index: 10;
-      max-width: 520px;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .w:hover::before, .w:focus::before{
+    .w:hover::before{
       content: "";
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
       bottom: 120%;
-      border: 7px solid transparent;
+      border: 6px solid transparent;
       border-top-color: #111;
-      z-index: 10;
-    }
-
-    /* Ljudspelare (Drive preview) */
-    .audio{
-      margin: 0 0 18px 0;
-    }
-    .audio iframe{
-      width: 100%;
-      height: 90px;
-      border: 0;
-      border-radius: 12px;
-      overflow: hidden;
-      display: block;
-      background: #f6f6f6;
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
-    <h1>The Long Ride Home</h1>
-    <div class="small">Listen to the text and then read it. Hover over words you don't understand.</div>
+<div class="page">
 
-    <!-- Ljudspelare (Drive preview) -->
-    <div class="audio" id="audioWrap" style="display:none;">
-      <iframe id="audioFrame" allow="autoplay"></iframe>
-    </div>
+<h1>The Girl and the Long Ride Home</h1>
+<div class="small">För muspekaren över markerade ord för svensk översättning.</div>
 
-    <!-- Texten renderas här -->
-    <div id="out" aria-label="Text med hover-översättning"></div>
-  </div>
+<div id="out"></div>
 
-  <script>
-    /* =========================
-       DU ÄNDRAR ENDAST HÄR
-       ========================= */
-
-    // A) Drive-filens ID (från länken .../d/ID/view). Lämna tomt "" om du inte vill ha ljud.
-    const DRIVE_FILE_ID = "1BGbK_6v6f06l93IIqtLnbxxdgKo5XbZa";
-
-    // B) Ordlista: en rad per ord/fras: engelska = svenska
-    const RAW_LIST = `a = en/ett
-a = en / ett
+<script>
+const RAW_LIST = `
+a = en/ett
 above = ovanför
 across = över / tvärs över
 after = efter
@@ -135,441 +79,158 @@ air = luft
 almost = nästan
 alone = ensam
 along = längs
-also = också
 always = alltid
 and = och
 animal = djur
 animals = djur
-area = område
-around = runt
-arrive = anlända
+anna = Anna
 as = som
 at = vid / på
-away = bort
-
-because = eftersom / därför att
-becomes = blir
-before = före / innan
+back = tillbaka
+bad = dålig / illa
+because = därför att / eftersom
+become = bli
 behind = bakom
-beside = bredvid
 between = mellan
 birds = fåglar
 boots = stövlar
-breakfast = frukost
-breathing = andning
 broken = trasig
 brushes = borstar
 but = men
-
+by = av / vid
 call = ringa
 calm = lugn
-can = kan
-cannot = kan inte
 car = bil
 carefully = försiktigt
 checks = kontrollerar
-clears = rensar / klarnar
 clean = ren
-close = nära
-closer = närmare
 clouds = moln
-coat = rock / päls
 cold = kall
-comes = kommer
-coming = kommande
-connection = koppling / band
+country = landsbygd
+countryside = landsbygd
 cover = täcka
 cows = kor
-cry = gråt / rop
-
 dark = mörk
-dangerous = farlig
 day = dag
 decides = bestämmer
-does = gör
-doctor = läkare
+difficult = svår
 dog = hund
-drops = sjunker / faller
-drink = dricka
-drive = köra
-
-earth = jord
+down = ner
 early = tidigt
-eats = äter
-even = även
+earth = jord
 evening = kväll
 exhausted = utmattad
-
+explains = förklarar
+farm = gård
 farms = gårdar
 fast = snabb
-fence = staket
 feels = känner sig
-fifteen = femton
+field = fält
 fields = fält
-finally = till slut
-flowing = rinnande
 forest = skog
-freedom = frihet
-fresh = frisk / fräsch
+free = fri
+fresh = frisk
 from = från
-
-gentle = mild / försiktig
-gets = får
-gives = ger
-go = gå / åka
-goes = går / åker
+gentle = mild
+go = gå
 good = bra
 grass = gräs
 green = grön
-grows = växer
-group = grupp
-
-head = huvud
-hears = hör
-hello = hej
-helps = hjälper
-her = hennes / henne
-him = honom
-his = hans
-hills = kullar
+help = hjälpa
 home = hem
 horse = häst
 hours = timmar
 house = hus
-hurts = gör ont
-
-if = om
-in = i
-into = in i
-is = är
-it = det
-its = dess
-
+hurt = skada
 jacket = jacka
-
-keeps = håller
-knows = vet / känner till
-
-legs = ben
-leave = lämna
+know = veta
+leg = ben
 light = ljus
-like = som / tycka om
-listens = lyssnar
-lives = bor / lever
+listen = lyssna
+little = liten
+live = bo
 long = lång
-lonely = ensam
-looks = ser
-loves = älskar
-
-many = många
+look = titta
 mind = sinne
-moment = ögonblick
-mood = humör
 morning = morgon
-most = mest
+mother = mamma
 move = röra sig
-moves = rör sig
-
 narrow = smal
-name = namn
 near = nära
-nearby = i närheten
-nervous = nervös
-not = inte
-
-of = av
-off = av
-old = gammal
-on = på
-once = en gång
-one = en / ett
-open = öppen
-out = ut
-
 parents = föräldrar
 path = stig
-paths = stigar
-pat = klapp
-patient = tålmodig
-people = människor
 phone = telefon
 proud = stolt
-puts = tar på / lägger
-
 quiet = tyst
-quietly = tyst
-
-relax = slappna av
-reins = tyglar
-relieved = lättad
 ride = rida
-rides = rider
-river = flod / å
-roads = vägar
-rolling = böljande
-
+river = flod
 safe = säker
-saddle = sadel
 says = säger
-scared = rädd
-seems = verkar
 sees = ser
-she = hon
-shorter = kortare
-sits = sitter
-sky = himmel
 small = liten
-smells = luktar
-so = så
-soft = mjuk
 sound = ljud
-special = speciell
-speaks = talar
-stable = stall
-stands = står
-stays = stannar
-steady = stadig
-steps = steg
-stops = stannar
 strong = stark
-stronger = starkare
-strange = märklig
-suddenly = plötsligt
+storm = Storm / storm
 sun = sol
-surprisingly = förvånansvärt
-
-takes = tar
-talks = pratar
 temperature = temperatur
-that = att / den / det
-the = den / det / de
-their = deras
-then = sedan
-they = de
-thing = sak
-this = detta / den här
-through = genom
 tired = trött
-to = till / att
-together = tillsammans
-turns = vänder
-
-understand = förstå
-up = upp
-uses = använder
-
-very = mycket
+toward = mot
+trees = träd
 voice = röst
-
-waits = väntar
-walks = går
-warm = varm
-watch = titta på
-watches = tittar på
 water = vatten
 weather = väder
-well = väl
-weak = svag
-when = när
-where = var
-while = medan
-who = vem
-why = varför
-wide = bred
 wind = vind
-with = med
-wraps = virar / sveper
-years = år
 `;
 
-    // C) Texten: behåll tomrader för avsnitt (som i originalet)
-    const TEXT = `The Girl and the Long Ride Home
+const TEXT = `
+The Girl and the Long Ride Home
 
 Anna is fifteen years old, and she lives in the countryside with her parents. Their house stands near wide fields, rolling green hills, and a quiet forest that looks dark in the evening. Anna loves animals, but she feels a special connection to her horse. His name is Storm. He is strong, calm, and surprisingly fast, and he always seems to understand her mood.
 
 Every morning Anna wakes up early, even when the air feels cold. She eats breakfast, puts on her boots, and walks to the stable. Storm waits for her and moves his head when he sees her, as if he says hello. Anna brushes his coat carefully and checks his saddle and reins. She talks to him in a soft voice, because it helps him relax. Then she rides Storm out into the open fields. She rides for many hours because it gives her freedom, and it clears her mind.
 
-Anna rides along small roads and narrow paths between farms. She sees birds above her, and cows that watch her from behind fences. The air smells of grass and earth, and it feels clean and fresh. Sometimes she stops near a river so Storm can drink water. She sits quietly for a moment and listens to the flowing water. She feels safe because she knows this area very well, and she knows most of the people who live nearby.
+Anna rides along small roads and narrow paths between farms. She sees birds above her, and cows that watch her from behind fences. The air smells of grass and earth, and it feels clean and fresh.
 
-In the afternoon, dark clouds move across the sky and cover the sun. The wind grows stronger, and the temperature drops a little. Anna looks up and decides to go home before the weather becomes dangerous. She turns Storm toward the forest path. This path is shorter, but it is also quiet and narrow, and it feels lonely when the light disappears.
+In the afternoon, dark clouds move across the sky and cover the sun. The wind grows stronger, and the temperature drops a little. Anna decides to go home before the weather becomes dangerous.
 
-As they ride through the forest, Anna suddenly hears a strange sound. Storm stops at once and does not move. Anna listens carefully. She hears a soft cry, almost like a weak call for help. The sound comes from behind a group of trees. Anna feels nervous, but she stays calm and rides closer, slowly and carefully.
+Behind the trees she sees a small dog. The dog looks scared and exhausted. One of its legs hurts. Anna stays calm. She calls her parents and waits with the dog.
 
-Behind the trees she sees a small dog. The dog sits near a broken fence, and it looks scared and exhausted. One of its legs hurts, and it does not stand up. Anna gets off her horse and walks toward the dog in small steps. She speaks in a calm voice and keeps her hands low. The dog looks at her, but it does not run away.
+In the evening, Anna finally goes home. She feels tired, but proud. It is a long day, but it is a good day.
+`;
 
-Anna thinks quickly. She cannot leave the dog alone in the forest, especially with the storm coming. She takes off her jacket and wraps it around the dog to keep it warm. Then she uses her phone and calls her parents. She explains where she is, what she sees, and why she needs help.
+function normalizeKey(k){ return k.trim().toLowerCase(); }
 
-Her parents drive to the forest in their car. While she waits, Anna stays close to the dog and watches its breathing. Storm stands quietly beside her, patient and steady. After some time, her parents arrive. They lift the dog carefully into the car and drive to the animal doctor.
-
-In the evening, Anna finally goes home. She feels tired, but also proud and relieved. She knows she does the right thing, even if it is difficult. Storm eats his food in the stable, and Anna gives him a gentle pat. It is a long day, but it is a good day.`;
-
-    /* =========================
-       INGEN ÄNDRING UNDER HÄR
-       ========================= */
-
-    function normalizeKey(raw){
-      return raw.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US");
+function buildDict(raw){
+  const d = {};
+  raw.split("\n").forEach(l=>{
+    const i = l.indexOf("=");
+    if(i>0){
+      d[normalizeKey(l.slice(0,i))]=l.slice(i+1).trim();
     }
+  });
+  return d;
+}
 
-    function buildDict(raw){
-      const dict = {};
-      raw.split("\n").forEach(line => {
-        const trimmed = line.trim();
-        if(!trimmed) return;
-
-        const idx = trimmed.indexOf("=");
-        if(idx === -1) return;
-
-        const left = trimmed.slice(0, idx).trim();
-        const right = trimmed.slice(idx + 1).trim();
-        if(!left || !right) return;
-
-        const key = normalizeKey(left);
-        dict[key] = right;
-      });
-      return dict;
-    }
-
-    // Tokeniserar engelsk text och behåller mellanslag/skiljetecken
-    function tokenizeEnglish(text){
-      const re = /[A-Za-z]+(?:-[A-Za-z]+)*|[0-9]+|\s+|[^A-Za-z0-9\s]+/g;
-      return text.match(re) || [];
-    }
-
-    function isWord(tok){
-      return /^[A-Za-z]+(?:-[A-Za-z]+)*$/.test(tok) || /^[0-9]+$/.test(tok);
-    }
-
-    function isWhitespace(tok){
-      return /^\s+$/.test(tok);
-    }
-
-    // Rendera en textbit (rubrik eller stycke) med hover där översättning finns
-    function renderInline(container, text, dict){
-      const tokens = tokenizeEnglish(text);
-
-      const maxWords = Object.keys(dict)
-        .map(k => k.split(" ").length)
-        .reduce((a, b) => Math.max(a, b), 1);
-
-      let i = 0;
-      while(i < tokens.length){
-        const tok = tokens[i];
-
-        if(!isWord(tok)){
-          container.appendChild(document.createTextNode(tok));
-          i += 1;
-          continue;
-        }
-
-        // Matcha fraser (längsta först)
-        let matched = false;
-
-        for(let k = maxWords; k >= 2; k--){
-          let j = i;
-          let words = [];
-          let endIndex = i;
-
-          while(words.length < k){
-            if(j >= tokens.length) break;
-            if(!isWord(tokens[j])) break;
-
-            words.push(tokens[j]);
-            endIndex = j;
-
-            if(words.length === k) break;
-
-            j += 1;
-            if(j >= tokens.length || !isWhitespace(tokens[j])){
-              words = [];
-              break;
-            }
-            while(j < tokens.length && isWhitespace(tokens[j])) j += 1;
-          }
-
-          if(words.length === k){
-            const key = normalizeKey(words.join(" "));
-            const sv = dict[key];
-            if(sv){
-              const segment = tokens.slice(i, endIndex + 1).join("");
-              const span = document.createElement("span");
-              span.className = "w";
-              span.textContent = segment;
-              span.setAttribute("tabindex", "0");
-              span.setAttribute("data-sv", sv);
-              container.appendChild(span);
-
-              i = endIndex + 1;
-              matched = true;
-              break;
-            }
-          }
-        }
-
-        if(matched) continue;
-
-        // Enskilt ord: markera endast om översättning finns
-        const key1 = normalizeKey(tok);
-        const sv1 = dict[key1];
-
-        if(sv1){
-          const span1 = document.createElement("span");
-          span1.className = "w";
-          span1.textContent = tok;
-          span1.setAttribute("tabindex", "0");
-          span1.setAttribute("data-sv", sv1);
-          container.appendChild(span1);
-        } else {
-          container.appendChild(document.createTextNode(tok));
-        }
-
-        i += 1;
-      }
-    }
-
-    function setupAudio(){
-      const wrap = document.getElementById("audioWrap");
-      const frame = document.getElementById("audioFrame");
-      if(!wrap || !frame) return;
-
-      const id = (DRIVE_FILE_ID || "").trim();
-      if(!id){
-        wrap.style.display = "none";
-        return;
-      }
-
-      frame.src = "https://drive.google.com/file/d/" + encodeURIComponent(id) + "/preview";
-      wrap.style.display = "block";
-    }
-
-    function render(){
-      setupAudio();
-
-      const dict = buildDict(RAW_LIST);
-      const out = document.getElementById("out");
-      out.innerHTML = "";
-
-      // Avsnitt baserat på tomrad
-      const clean = (TEXT || "").replace(/\r\n/g, "\n").trim();
-      const blocks = clean.split(/\n\s*\n+/);
-
-      blocks.forEach((block, idx) => {
-        // Håll ihop radbrytningar inom avsnitt
-        const blockText = block.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
-
-        if(idx === 0){
-          const h2 = document.createElement("h2");
-          renderInline(h2, blockText, dict);
-          out.appendChild(h2);
-        } else {
-          const p = document.createElement("p");
-          renderInline(p, blockText, dict);
-          out.appendChild(p);
-        }
-      });
-    }
-
-    render();
-  </script>
+function render(){
+  const dict = buildDict(RAW_LIST);
+  const out = document.getElementById("out");
+  TEXT.split(/\n\s*\n/).forEach((b,i)=>{
+    const el = i===0 ? document.createElement("h2") : document.createElement("p");
+    b.split(/(\W+)/).forEach(tok=>{
+      const k = normalizeKey(tok);
+      if(dict[k]){
+        const s=document.createElement("span");
+        s.className="w";
+        s.textContent=tok;
+        s.dataset.sv=dict[k];
+        el.appendChild(s);
+      } else el.appendChild(document.createTextNode(tok));
+    });
+    out.appendChild(el);
+  });
+}
+render();
+</script>
+</div>
 </body>
 </html>
