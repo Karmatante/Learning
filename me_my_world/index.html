@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pen Pal Letter – Hover Vocabulary</title>
 
+  <!-- Dyslexivänligt typsnitt (Lexend). Fallback till OpenDyslexic om installerat lokalt. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
@@ -18,168 +19,349 @@
       font-size: 18px;
       line-height: 1.7;
       padding: 20px;
+      max-width: none;
       background: #fff;
       color: #111;
     }
 
-    h1{ font-size:22px; margin:0 0 10px 0; }
-    h2{ font-size:20px; margin:0 0 16px 0; }
-    p{ margin:0 0 16px 0; }
+    .page{ width:100%; max-width:100%; }
 
-    .small{
-      font-size:14px;
-      color:#444;
-      margin:0 0 18px 0;
+    h1{
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      line-height: 1.3;
     }
 
+    .small{
+      font-size: 18px;
+      color: #444;
+      margin: 0 0 18px 0;
+    }
+
+    h2{
+      font-size: 20px;
+      margin: 0 0 16px 0;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 16px 0; }
+    p:last-child{ margin-bottom: 0; }
+
+    /* Endast ord/fraser med översättning får understreck */
     .w{
-      position:relative;
-      cursor:help;
-      border-bottom:1px dotted #666;
-      padding:0 1px;
+      position: relative;
+      cursor: help;
+      border-bottom: 1px dotted #666;
+      padding: 0 1px;
     }
 
     .w:hover::after, .w:focus::after{
       content: attr(data-sv);
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      bottom:140%;
-      background:#111;
-      color:#fff;
-      padding:6px 8px;
-      border-radius:8px;
-      font-size:14px;
-      white-space:nowrap;
-      z-index:10;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 140%;
+      background: #111;
+      color: #fff;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 14px;
+      white-space: nowrap;
+      z-index: 10;
+      max-width: 420px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .w:hover::before, .w:focus::before{
-      content:"";
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      bottom:120%;
-      border:6px solid transparent;
-      border-top-color:#111;
-      z-index:10;
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 120%;
+      border: 6px solid transparent;
+      border-top-color: #111;
+      z-index: 10;
+    }
+
+    /* Ljudspelare (Drive preview) */
+    .audio{ margin: 0 0 18px 0; }
+    .audio iframe{
+      width: 100%;
+      height: 90px;
+      border: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      display: block;
+      background: #f6f6f6;
     }
   </style>
 </head>
 
 <body>
-<div class="page">
-  <h1>Pen Pal Letter</h1>
-  <div class="small">Hovra över markerade ord för svensk översättning.</div>
+  <div class="page">
+    <h1>Ready about Alex</h1>
+    <div class="small">Hovra över markerade ord för svensk översättning.</div>
 
-  <div id="out"></div>
-</div>
+    <div class="audio" id="audioWrap" style="display:none;">
+      <iframe id="audioFrame" allow="autoplay"></iframe>
+    </div>
 
-<script>
-const RAW_LIST = `
+    <div id="out" aria-label="Text med hover-översättning"></div>
+  </div>
+
+  <script>
+    /* =========================
+       DU ÄNDRAR ENDAST HÄR
+       ========================= */
+
+    // A) Drive-filens ID
+    const DRIVE_FILE_ID = "1RD6PUo5Hl-rk9nv9ABB17d0RtaOGO9Xn";
+
+    // B) Ordlista: engelska = svenska (exakt som du gav)
+    const RAW_LIST = `
+a = en, ett
+about = om
+alex = Alex
+also = också
+am = är
+and = och
+any = några, något
+are = är
+ask = fråga
+at = på
+best = bästa
+brothers = bröder
+but = men
+confident = självsäker
+countries = länder
 dear = kära
-pen pal = brevvän
-name = namn
-years old = år gammal
-from = från
-small town = liten stad
-near = nära
-sea = hav
-student = elev
-secondary school = högstadiet
-year = årskurs
-friendly = vänlig
-shy = blyg
-meet = träffa
-learn = lära sig
-excited = glad
-family = familj
-younger = yngre
-energetic = energisk
+do = göra
 dog = hund
-playful = lekfull
-loyal = lojal
-free time = fritid
-listening = lyssna
-music = musik
-playing = spela
+english = engelska
+energetic = energisk
+enjoy = tycka om
+family = familj
+favourite = favorit
+feel = känna
+films = filmer
 football = fotboll
+free = fri
+friendly = vänlig
+friends = vänner
+from = från
+games = spel
+have = ha
+hello = hej
+helps = hjälper
+his = hans
+how = hur
+i = jag
+in = i
+is = är
+learning = lära sig
+like = gilla
+listening = lyssna
+live = bo
+little = liten
+lot = mycket
+loyal = lojal
+makes = gör
+many = många
+max = Max
+me = mig
+meet = träffa
+music = musik
+my = min
+name = namn
+near = nära
+new = nya
+now = nu
+of = av
+old = gammal
+one = en
+or = eller
+other = andra
+pal = brevvän
+pen = penna
+people = människor
+pets = husdjur
+playful = lekfull
+playing = spela
+quite = ganska
+questions = frågor
 relax = slappna av
+school = skola
+sea = hav
+secondary = högstadie-
+she = hon
+shy = blyg
+sister = syster
+sisters = systrar
+small = liten
+some = några
+sometimes = ibland
+speaking = tala
 stressed = stressad
 strong = stark
-confident = självsäker
-films = filmer
-video games = tv-spel
-friends = vänner
-kind = snälla
-school = skola
+student = elev
+subject = ämne
 subjects = ämnen
-favourite = favorit
-questions = frågor
-brothers = bröder
-sisters = systrar
-pets = husdjur
-best wishes = vänliga hälsningar
-`;
+sweden = Sverige
+talks = pratar
+than = än
+the = den, det
+time = tid
+to = att
+town = stad
+very = väldigt
+video = video
+want = vilja
+watching = titta på
+what = vad
+when = när
+where = var
+who = vem
+wishes = hälsningar
+with = med
+words = ord
+year = år
+years = år
+you = du
+younger = yngre
+your = din, ditt, dina
+    `.trim();
 
-const TEXT = `
+    // C) Texten
+    const TEXT = `
 Dear Pen Pal,
 
-Hello. My name is Alex, and I am 13 years old. I am from Sweden, and I live in a small town near the sea. I am a student in secondary school, and I am in year 7. I am quite friendly, but sometimes I am a little shy when I meet new people.
+Hello. My name is Alex, and I am 13 years old. I am from Sweden, and I live in a small town near the sea. I am a student in secondary school, and I am in year 7. I am quite friendly, but sometimes I am a little shy when I meet new people. Still, I like to learn about others, so I am excited to write to you.
 
-I have a small family. I have one sister, and she is younger than me. She is very energetic and talks a lot. I also have a dog. His name is Max. He is playful and loyal.
+I have a small family. I have one sister, and she is younger than me. She is very energetic and talks a lot. I also have a dog. His name is Max, and he is brown and white. He is playful and loyal, and he always makes me feel better when I am tired or sad.
 
-In my free time, I like listening to music and playing football. Music helps me relax when I feel stressed. Football makes me feel strong and confident. I also enjoy watching films and playing video games with my friends.
+In my free time, I like listening to music and playing football. Music helps me relax, especially when I feel stressed. Football is important to me because it makes me feel strong and confident. I also enjoy watching films and playing video games with my friends. They are kind and supportive, and we often laugh together.
 
-At school, I have many subjects. English is my favourite subject. I like learning new words and speaking to people from other countries.
+At school, I have many subjects. Some of them are interesting, and some are challenging. English is one of my favourite subjects because I like learning new words and speaking to people from other countries. Sometimes school is demanding, but I try my best.
 
 Now I want to ask you some questions. Who are you? Where are you from? What do you like to do in your free time? Do you have any brothers, sisters, or pets? How do you feel about school?
 
+I hope to hear from you soon. I am curious about your life.
+
 Best wishes,
 Alex
-`;
+    `.trim();
 
-function normalizeKey(raw){
-  return raw.trim().replace(/\s+/g," ").toLowerCase();
-}
+    /* =========================
+       INGEN ÄNDRING UNDER HÄR
+       ========================= */
 
-function buildDict(raw){
-  const dict = {};
-  raw.split("\n").forEach(line=>{
-    const i=line.indexOf("=");
-    if(i===-1) return;
-    dict[normalizeKey(line.slice(0,i))]=line.slice(i+1).trim();
-  });
-  return dict;
-}
-
-function tokenize(text){
-  return text.match(/[A-Za-z]+(?:-[A-Za-z]+)*|\s+|[^A-Za-z\s]+/g) || [];
-}
-
-function renderInline(el,text,dict){
-  const tokens=tokenize(text);
-  tokens.forEach(tok=>{
-    const key=normalizeKey(tok);
-    if(dict[key]){
-      const s=document.createElement("span");
-      s.className="w";
-      s.textContent=tok;
-      s.setAttribute("data-sv",dict[key]);
-      el.appendChild(s);
-    } else {
-      el.appendChild(document.createTextNode(tok));
+    function normalizeKey(raw){
+      return raw.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US");
     }
-  });
-}
 
-const dict=buildDict(RAW_LIST);
-const out=document.getElementById("out");
-TEXT.trim().split(/\n\s*\n/).forEach((b,i)=>{
-  const el=i===0?document.createElement("h2"):document.createElement("p");
-  renderInline(el,b.replace(/\n+/g," "),dict);
-  out.appendChild(el);
-});
-</script>
+    function buildDict(raw){
+      const dict = {};
+      raw.split("\n").forEach(line => {
+        const trimmed = line.trim();
+        if(!trimmed) return;
+
+        const idx = trimmed.indexOf("=");
+        if(idx === -1) return;
+
+        const left = trimmed.slice(0, idx).trim();
+        const right = trimmed.slice(idx + 1).trim();
+        if(!left || !right) return;
+
+        dict[normalizeKey(left)] = right;
+      });
+      return dict;
+    }
+
+    // Tokeniserar och behåller skiljetecken/mellanslag
+    function tokenize(text){
+      const re = /[A-Za-z]+(?:-[A-Za-z]+)*|[0-9]+|\s+|[^A-Za-z0-9\s]+/g;
+      return text.match(re) || [];
+    }
+
+    function isWord(tok){
+      return /^[A-Za-z]+(?:-[A-Za-z]+)*$/.test(tok) || /^[0-9]+$/.test(tok);
+    }
+
+    function renderInline(container, text, dict){
+      const tokens = tokenize(text);
+
+      let i = 0;
+      while(i < tokens.length){
+        const tok = tokens[i];
+
+        if(!isWord(tok)){
+          container.appendChild(document.createTextNode(tok));
+          i += 1;
+          continue;
+        }
+
+        const key = normalizeKey(tok);
+        const sv = dict[key];
+
+        if(sv){
+          const span = document.createElement("span");
+          span.className = "w";
+          span.textContent = tok;
+          span.setAttribute("tabindex", "0");
+          span.setAttribute("data-sv", sv);
+          container.appendChild(span);
+        } else {
+          container.appendChild(document.createTextNode(tok));
+        }
+
+        i += 1;
+      }
+    }
+
+    function setupAudio(){
+      const wrap = document.getElementById("audioWrap");
+      const frame = document.getElementById("audioFrame");
+      if(!wrap || !frame) return;
+
+      const id = (DRIVE_FILE_ID || "").trim();
+      if(!id){
+        wrap.style.display = "none";
+        return;
+      }
+
+      frame.src = "https://drive.google.com/file/d/" + encodeURIComponent(id) + "/preview";
+      wrap.style.display = "block";
+    }
+
+    function render(){
+      setupAudio();
+
+      const dict = buildDict(RAW_LIST);
+      const out = document.getElementById("out");
+      out.innerHTML = "";
+
+      const clean = (TEXT || "").replace(/\r\n/g, "\n").trim();
+      const blocks = clean.split(/\n\s*\n+/);
+
+      blocks.forEach((block, idx) => {
+        const blockText = block.replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+
+        if(idx === 0){
+          const h2 = document.createElement("h2");
+          renderInline(h2, blockText, dict);
+          out.appendChild(h2);
+        } else {
+          const p = document.createElement("p");
+          renderInline(p, blockText, dict);
+          out.appendChild(p);
+        }
+      });
+    }
+
+    render();
+  </script>
 </body>
 </html>
+
